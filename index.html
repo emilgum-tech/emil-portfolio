@@ -1,0 +1,348 @@
+<title>Эмиль — automation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700;900&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf7f1;
+    --surface:#ffffff;
+    --surface-2:#f2ece0;
+    --text:#201c15;
+    --text-muted:#726a5a;
+    --border:#e7ddc9;
+    --accent:#b9791a;
+    --accent-ink:#7a4f0f;
+    --accent-soft:#f6e6c8;
+    --line-on-dark:#e8a33d;
+    --shadow: 0 1px 2px rgba(32,28,21,.05), 0 14px 32px -18px rgba(32,28,21,.22);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14120f;
+      --surface:#1c1914;
+      --surface-2:#241f18;
+      --text:#f2ecdf;
+      --text-muted:#a89c86;
+      --border:#332c20;
+      --accent:#e8a33d;
+      --accent-ink:#ffd794;
+      --accent-soft:#3a2b12;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 32px -18px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14120f;
+    --surface:#1c1914;
+    --surface-2:#241f18;
+    --text:#f2ecdf;
+    --text-muted:#a89c86;
+    --border:#332c20;
+    --accent:#e8a33d;
+    --accent-ink:#ffd794;
+    --accent-soft:#3a2b12;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 32px -18px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.55;
+    padding:0 0 72px;
+  }
+  .container{ max-width:880px; margin:0 auto; padding:0 20px; }
+
+  h1,h2,h3{ font-family:"Golos Text", ui-sans-serif, sans-serif; letter-spacing:-0.01em; text-wrap:balance; margin:0; }
+
+  /* ---------- header ---------- */
+  header{ padding:20px 0 0; }
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .brand{ font-family:"Golos Text", sans-serif; font-weight:700; font-size:16px; }
+  .status{
+    display:flex; align-items:center; gap:7px;
+    font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--text-muted);
+    text-transform:uppercase; letter-spacing:.06em;
+  }
+  .status::before{
+    content:""; width:7px; height:7px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .status::before{ animation:none; } }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:56px 0 40px; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--accent-ink);
+    text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px;
+  }
+  h1.headline{ font-size:clamp(30px, 5.4vw, 48px); font-weight:900; line-height:1.08; margin-bottom:18px; }
+  h1.headline em{ font-style:normal; color:var(--accent-ink); }
+  .lede{ font-size:17px; color:var(--text-muted); max-width:56ch; margin-bottom:28px; }
+  .cta-row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"Golos Text", sans-serif; font-weight:600; font-size:15px;
+    padding:13px 22px; border-radius:10px; text-decoration:none;
+  }
+  .btn-primary{ background:var(--accent); color:#1a1206; }
+  .btn-ghost{ color:var(--text); border:1px solid var(--border); }
+  .fine{ font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--text-muted); margin-top:16px; }
+
+  /* ---------- section shell ---------- */
+  section{ padding:44px 0; border-top:1px solid var(--border); }
+  .kicker{
+    font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--text-muted);
+    text-transform:uppercase; letter-spacing:.09em; margin-bottom:10px;
+  }
+  h2.section-title{ font-size:clamp(22px, 3.4vw, 30px); font-weight:700; margin-bottom:8px; }
+  .section-sub{ color:var(--text-muted); font-size:15px; max-width:60ch; margin-bottom:28px; }
+
+  /* ---------- services ---------- */
+  .services{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; }
+  .svc{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:20px; box-shadow:var(--shadow);
+  }
+  .svc .n{ font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--accent-ink); margin-bottom:10px; }
+  .svc h3{ font-size:17px; font-weight:700; margin-bottom:8px; }
+  .svc p{ font-size:14px; color:var(--text-muted); margin:0; }
+
+  /* ---------- why ---------- */
+  .why-list{ display:flex; flex-direction:column; gap:0; }
+  .why-item{ display:grid; grid-template-columns:44px 1fr; gap:16px; padding:18px 0; border-bottom:1px solid var(--border); }
+  .why-item:last-child{ border-bottom:none; }
+  .why-num{ font-family:"Golos Text", sans-serif; font-size:22px; font-weight:900; color:var(--accent-ink); }
+  .why-item h3{ font-size:16px; font-weight:700; margin-bottom:6px; }
+  .why-item p{ font-size:14.5px; color:var(--text-muted); margin:0; max-width:58ch; }
+
+  /* ---------- portfolio ---------- */
+  .work-list{ display:flex; flex-direction:column; gap:12px; }
+  .work{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:20px; box-shadow:var(--shadow);
+    display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;
+  }
+  .work-tag{
+    font-family:"IBM Plex Mono", monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--text-muted); background:var(--surface-2); border-radius:5px; padding:3px 7px; margin-bottom:9px; display:inline-block;
+  }
+  .work h3{ font-size:16px; font-weight:700; margin-bottom:6px; }
+  .work p{ font-size:14px; color:var(--text-muted); margin:0; max-width:52ch; }
+  .work-link{
+    font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--accent-ink);
+    text-decoration:none; border-bottom:1px solid currentColor; white-space:nowrap; flex-shrink:0;
+  }
+
+  /* ---------- pricing ---------- */
+  .price-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:28px 24px; box-shadow:var(--shadow);
+    display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .price-figure{ font-family:"Golos Text", sans-serif; font-weight:900; font-size:clamp(28px,4.4vw,40px); }
+  .price-figure span{ font-family:"IBM Plex Mono", monospace; font-weight:400; font-size:14px; color:var(--text-muted); display:block; margin-top:4px; }
+  .price-note{ font-size:14px; color:var(--text-muted); max-width:34ch; }
+
+  /* ---------- footer cta ---------- */
+  .footer-cta{ text-align:center; padding:56px 0 8px; border-top:1px solid var(--border); }
+  .footer-cta h2{ font-size:clamp(24px,4vw,34px); font-weight:900; margin-bottom:14px; }
+  .footer-cta p{ color:var(--text-muted); margin-bottom:24px; }
+  footer.sig{ text-align:center; font-family:"IBM Plex Mono", monospace; font-size:11.5px; color:var(--text-muted); padding-top:36px; }
+
+  /* ---------- animation: entrance + scroll reveal ---------- */
+  /* Base state is always fully visible - JS adds .reveal-armed only when it
+     will actually animate something in, so a no-JS or reduced-motion visit
+     never hides content behind a promise that might not resolve. */
+  .reveal-armed{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal-armed.in-view{ opacity:1; transform:none; }
+  .hero-stagger.reveal-armed{ transition-delay: calc(var(--stagger, 0) * 90ms); }
+
+  /* ---------- animation: hover micro-interactions ---------- */
+  .svc, .work, .price-card{ transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+  .svc:hover, .work:hover, .price-card:hover{
+    transform:translateY(-3px);
+    border-color:color-mix(in srgb, var(--accent) 45%, var(--border));
+    box-shadow:0 4px 10px rgba(0,0,0,.06), 0 20px 38px -20px rgba(0,0,0,.28);
+  }
+  .btn{ transition:transform .18s ease, box-shadow .18s ease, background .18s ease; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 22px -10px color-mix(in srgb, var(--accent) 60%, transparent); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-ink); transform:translateY(-2px); }
+  .btn .arrow{ display:inline-block; transition:transform .22s ease; }
+  .btn:hover .arrow{ transform:translateX(4px); }
+
+  .work-link{ position:relative; }
+  .work-link::after{
+    content:""; position:absolute; left:0; right:100%; bottom:-2px; height:1px;
+    background:currentColor; transition:right .25s ease;
+  }
+  .work-link:hover::after{ right:0; }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal-armed{ transition:none !important; opacity:1 !important; transform:none !important; }
+    .svc, .work, .price-card, .btn, .btn .arrow, .work-link::after{ transition:none !important; }
+    .status::before{ animation:none !important; }
+  }
+</style>
+
+<div class="container">
+  <header>
+    <div class="topbar">
+      <div class="brand">Эмиль · automation</div>
+      <div class="status">на связи</div>
+    </div>
+  </header>
+
+  <section class="hero" style="border-top:none;">
+    <div class="eyebrow hero-stagger" style="--stagger:0">Уфа · сайты и Telegram-боты для малого бизнеса</div>
+    <h1 class="headline hero-stagger" style="--stagger:1">Клиент пишет вечером в субботу.<br><em>Кто-то должен ответить.</em></h1>
+    <p class="lede hero-stagger" style="--stagger:2">
+      Я делаю сайты, Telegram-ботов и автоматизацию заявок для небольших
+      компаний — так, чтобы бизнес отвечал клиенту мгновенно, даже когда
+      сам владелец спит или в отпуске.
+    </p>
+    <div class="cta-row hero-stagger" style="--stagger:3">
+      <a class="btn btn-primary" href="https://t.me/dalshebolshe03" target="_blank" rel="noopener">Написать в Telegram &nbsp;<span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#work">Смотреть работы</a>
+    </div>
+    <div class="fine hero-stagger" style="--stagger:4">@dalshebolshe03 · отвечаю обычно в течение дня</div>
+  </section>
+
+  <section id="services">
+    <div class="kicker">Что делаю</div>
+    <h2 class="section-title">Четыре вещи, которые реально нужны бизнесу</h2>
+    <div class="services">
+      <div class="svc reveal">
+        <div class="n">01</div>
+        <h3>Сайты</h3>
+        <p>Лендинг или сайт под конкретную задачу — без шаблонной воды, с публикацией на сервере включённой в работу.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="n">02</div>
+        <h3>Telegram-боты</h3>
+        <p>Бот ловит заявки 24/7, отвечает мгновенно, ведёт клиента и возвращает старых напоминаниями.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="n">03</div>
+        <h3>Интеграции</h3>
+        <p>Связываю сайт/бота с AmoCRM, GetCourse и другими системами — заявка сразу попадает туда, где вы её увидите.</p>
+      </div>
+      <div class="svc reveal">
+        <div class="n">04</div>
+        <h3>Поиск клиентов</h3>
+        <p>Софт, который сам находит потенциальных клиентов по заданным критериям — вместо ручного перебора вручную.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Почему именно так</div>
+    <h2 class="section-title">Не потому что вы плохо работаете</h2>
+    <p class="section-sub">Потому что физически невозможно быть на связи 24/7, когда в команде один-два человека.</p>
+    <div class="why-list">
+      <div class="why-item reveal">
+        <div class="why-num">01</div>
+        <div>
+          <h3>Пропущенное сообщение — это ушедший клиент</h3>
+          <p>Заявка приходит вечером в субботу, вы в отпуске. Утром отвечаете — а человек уже выбрал конкурента, у которого ответили сразу.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">02</div>
+        <div>
+          <h3>Делаю весь цикл сам</h3>
+          <p>Дизайн, разработка, публикация на сервере, настройка бота — не собираю команду на каждый мелкий проект, поэтому быстрее и дешевле.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">03</div>
+        <div>
+          <h3>Без давления и переплаты за красивые слова</h3>
+          <p>Сначала бесплатно показываю, как это может выглядеть для вашего конкретного бизнеса — решение принимаете вы, без обязательств.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="kicker">Портфолио</div>
+    <h2 class="section-title">Несколько реальных проектов</h2>
+    <div class="work-list">
+      <div class="work reveal">
+        <div>
+          <span class="work-tag">Сайт</span>
+          <h3>Ветераны ВДВ и спецназа РБ</h3>
+          <p>Сайт региональной общественной организации — новости, галерея памятных мероприятий, разделы о деятельности.</p>
+        </div>
+        <a class="work-link" href="https://veterany-vdv-rb.ru/" target="_blank" rel="noopener">veterany-vdv-rb.ru →</a>
+      </div>
+      <div class="work reveal">
+        <div>
+          <span class="work-tag">Telegram-бот</span>
+          <h3>Бот для салона красоты</h3>
+          <p>Принимает заявки на запись, отвечает клиентам в чате мгновенно вместо администратора, который не всегда на месте.</p>
+        </div>
+      </div>
+      <div class="work reveal">
+        <div>
+          <span class="work-tag">Софт</span>
+          <h3>Поиск-бот для лидогенерации</h3>
+          <p>Автоматически находит потенциальных клиентов по заданным критериям — вместо того чтобы искать их вручную.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">Стоимость</div>
+    <h2 class="section-title">Без прайс-листа на все случаи</h2>
+    <div class="price-card reveal">
+      <div class="price-figure">от 10 000 ₽<span>всё индивидуально — зависит от задачи</span></div>
+      <div class="price-note">Напишите, что нужно — за день скажу точную цену и сроки, без скрытых доплат.</div>
+    </div>
+  </section>
+
+  <section class="footer-cta" style="border-top:1px solid var(--border);">
+    <h2>Готовы обсудить?</h2>
+    <p>Бесплатно покажу, как это может выглядеть для вашего бизнеса — без обязательств.</p>
+    <a class="btn btn-primary" href="https://t.me/dalshebolshe03" target="_blank" rel="noopener">Написать @dalshebolshe03 <span class="arrow">→</span></a>
+  </section>
+
+  <footer class="sig">Эмиль · Уфа · сайты, боты, автоматизация</footer>
+</div>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  // Hero: arm + reveal on load, staggered by --stagger via CSS transition-delay.
+  var heroEls = document.querySelectorAll('.hero-stagger');
+  heroEls.forEach(function (el) { el.classList.add('reveal-armed'); });
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      heroEls.forEach(function (el) { el.classList.add('in-view'); });
+    });
+  });
+
+  // Sections below the fold: arm + reveal on scroll into view.
+  var revealEls = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('in-view'); });
+    return;
+  }
+  revealEls.forEach(function (el) { el.classList.add('reveal-armed'); });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function (el) { io.observe(el); });
+})();
+</script>
